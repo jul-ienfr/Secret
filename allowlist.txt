@@ -1,0 +1,12 @@
+# Allowlist : occurrences connues / faux positifs a ne pas faire echouer la CI.
+# Un motif par ligne : sous-chaine (insensible a la casse) ou regex: prefixe.
+# Lignes vides et lignes commencant par # ignorees.
+# Les occurrences matchees sont marquees [ignore] dans les rapports.
+# Avec --strict, seules les NON ignorees comptent (CI verte malgre les ignorees ;
+# sans --strict, --fail-on-find echoue des qu'il y a >= 1 occurrence, ignorees incluses).
+
+# Exemple : documentation contenant des exemples de cles factices
+README_AUDIT.md
+
+# Exemple regex : ignorer un fichier de test precis
+# regex:(^|[/\\])tests?[/\\]

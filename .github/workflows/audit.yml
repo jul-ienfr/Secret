@@ -1,0 +1,67 @@
+# Audit mots-cles + secrets sur un depot.
+#
+# Le mode SECRETS est toujours autorise, sur tous les depots.
+#
+# Declenchement : manuel (workflow_dispatch) ou a chaque push.
+# Echec (rouge) si >= 1 occurrence trouvee (--fail-on-find -> exit 1).
+
+name: audit-mots-cles-et-secrets
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: "Audit mots-cles (defaut : strict avec allowlist)"
+        run: |
+          python github_audit_scanner.py \
+            --source local --local . \
+            --keywords mots_cles.txt \
+            --report resultats-ci.txt \
+            --fail-on-find \
+            --strict \
+            --allowlist allowlist.txt \
+            --exclude ".git/" \
+            --exclude "testdata/" \
+            --exclude "tests/" \
+            --exclude "*.lock"
+
+      - name: Audit secrets / API-Key (strict avec allowlist)
+        if: always()
+        run: |
+          python github_audit_scanner.py \
+            --source local --local . \
+            --output audit_report.json \
+            --fail-on-find \
+            --strict \
+            --allowlist allowlist.txt \
+            --exclude ".git/" \
+            --exclude "testdata/" \
+            --exclude "tests/" \
+            --html audit_report.html \
+            --csv audit_report.csv \
+            --sarif audit_report.sarif
+
+      - name: Rapports texte (artefact, 30 jours)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultats-audit
+          path: |
+            resultats-ci.txt
+            audit_report.json
+            audit_report.html
+            audit_report.csv
+            audit_report.sarif
+          retention-days: 30

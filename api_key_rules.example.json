@@ -1,0 +1,27 @@
+{
+  "rules": [
+    {
+      "id": "acme_internal_key",
+      "provider": "ACME",
+      "category": "custom",
+      "severity": "critical",
+      "regex": "\\bacme_(?:live|test)_[A-Za-z0-9]{24,}\\b",
+      "group": 0,
+      "min_len": 24,
+      "min_entropy": 0.0,
+      "priority": 130,
+      "description": "Cle interne ACME (exemple de regle personnalisee)"
+    },
+    {
+      "id": "acme_basic_token",
+      "provider": "ACME Legacy",
+      "category": "custom",
+      "severity": "high",
+      "regex": "\\bacme-token-([A-Za-z0-9]{20,})\\b",
+      "group": 1,
+      "min_len": 20,
+      "ignore_case": true,
+      "description": "Ancien token ACME (capture du groupe 1)"
+    }
+  ]
+}

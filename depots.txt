@@ -1,0 +1,8 @@
+# Fichier de DEPOTS CIBLES : un "owner/name" par ligne.
+# Lignes vides et lignes commencant par # ignorees.
+# Les URL https://github.com/owner/name sont aussi acceptees.
+# Exemple : remplace par les depots a auditer.
+
+# mon-user/mon-repo
+# ma-org/repo-a-auditer
+# https://github.com/ma-org/autre-repo

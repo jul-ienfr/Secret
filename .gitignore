@@ -1,0 +1,11 @@
+# Rapports et sorties generees (peuvent contenir des secrets reels)
+resultats*.txt
+rapport-test*.json
+audit_report.*
+.audit_state.json
+
+# Caches et configuration locale
+__pycache__/
+*.pyc
+.ruff_cache/
+.claude/

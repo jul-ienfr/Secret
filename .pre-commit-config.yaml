@@ -1,0 +1,13 @@
+# Pre-commit : bloque le commit si un mot-cle sensible est detecte.
+# Usage legitime UNIQUEMENT sur TES propres depots.
+# Doc : https://pre-commit.com — installe avec : pip install pre-commit && pre-commit install
+
+repos:
+  - repo: local
+    hooks:
+      - id: audit-mots-cles
+        name: audit mots-cles (bloque si occurrence)
+        entry: python github_audit_scanner.py --source local --local . --keywords mots_cles.txt --report resultats-precommit.txt --fail-on-find --strict --allowlist allowlist.txt --exclude ".git/" --exclude "testdata/" --exclude "tests/"
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -1,0 +1,26 @@
+# Fichier de motifs : UN motif par ligne.
+# Les lignes vides et celles qui commencent par # sont ignorees.
+#
+# 3 types de motifs :
+#   1) Texte simple (recherche "contient", insensible a la casse par defaut) :
+#        API_KEY            -> trouve "API_KEY = ...", "mon api_key ici", etc.
+#        PAS besoin de * autour : le programme cherche deja PARTOUT dans la ligne.
+#   2) Joker (* = n'importe quoi, ? = 1 seul caractere) :
+#        sk-*               -> trouve "sk-abc123", "xxx sk-proj-999 yyy", etc.
+#        pass?word          -> trouve "password", "pass_word", "pass-word", etc.
+#   3) Regex Python (prefixe "regex:") :
+#        regex:sk-[A-Za-z0-9\-]{10,}
+#        regex:todo[-_ ]secret
+#      Les regex invalides sont ignorees avec un message (le scan continue).
+
+API_KEY
+*API_KEY*
+sk-*
+*sk-*
+
+
+# Exemples avances (decommente pour t'en servir) :
+# sk-*
+# pass?word
+# regex:sk-[A-Za-z0-9\-]{10,}
+# regex:todo[-_ ]secret
